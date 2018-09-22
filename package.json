@@ -3,7 +3,7 @@
   "version": "1.0.0",
   "main": "index.js",
   "author": "flasco",
-  "license": "MIT",
+  "license": "BSD 3-Clause",
   "private": true,
   "scripts": {
     "start": "node ./index.js",
