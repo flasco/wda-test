@@ -7,6 +7,10 @@
   "private": true,
   "scripts": {
     "start": "node ./index.js",
+    "wda": "sh script/test.sh",
+    "wda-init": "cd WebDriverAgent && ./Scripts/bootstrap.sh",
+    "wda-clone": "git clone https://github.com/facebook/WebDriverAgent.git",
+    "wda-update": "cd WebDriverAgent && git pull",
     "jest": "jest --no-cache --forceExit --runInBand --detectOpenHandles"
   },
   "lint-staged": {

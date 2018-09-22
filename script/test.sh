@@ -1,5 +1,6 @@
+cd WebDriverAgent
 # 解锁keychain以便正常签名应用
-PASSWORD= $(你的电脑登录密码)
+PASSWORD="123"
 # just like this => PASSWORD= "123456789"
 security unlock-keychain -p $PASSWORD ~/Library/Keychains/login.keychain
 
