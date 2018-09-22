@@ -1,0 +1,33 @@
+{
+  "name": "wda-test",
+  "version": "1.0.0",
+  "main": "index.js",
+  "author": "flasco",
+  "license": "MIT",
+  "private": true,
+  "scripts": {
+    "start": "node ./index.js",
+    "jest": "jest --no-cache --forceExit --runInBand --detectOpenHandles"
+  },
+  "lint-staged": {
+    "*.js": [
+      "eslint",
+      "git add"
+    ]
+  },
+  "dependencies": {
+    "flasco_wda-driver": "^1.0.2",
+    "sharp": "^0.20.8"
+  },
+  "devDependencies": {
+    "eslint": "^5.6.0",
+    "husky": "^1.0.0-rc.14",
+    "jest": "23.6.0",
+    "lint-staged": "^7.3.0"
+  },
+  "husky": {
+    "hooks": {
+      "pre-commit": "lint-staged"
+    }
+  }
+}
