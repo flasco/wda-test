@@ -1227,9 +1227,9 @@ find-up@^3.0.0:
   dependencies:
     locate-path "^3.0.0"
 
-flasco_wda-driver@^1.0.2:
-  version "1.0.2"
-  resolved "https://registry.npmjs.org/flasco_wda-driver/-/flasco_wda-driver-1.0.2.tgz#0c50c1aa6f28d8f3e00bcea49f6b7778dc968c13"
+flasco_wda-driver@^1.0.3:
+  version "1.0.3"
+  resolved "http://registry.npm.taobao.org/flasco_wda-driver/download/flasco_wda-driver-1.0.3.tgz#dcf228ef67f5c083475e64d7b17df31413c10e43"
   dependencies:
     request "^2.83.0"
     request-promise "^4.2.2"

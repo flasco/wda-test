@@ -20,7 +20,7 @@
     ]
   },
   "dependencies": {
-    "flasco_wda-driver": "^1.0.2",
+    "flasco_wda-driver": "^1.0.3",
     "sharp": "^0.20.8"
   },
   "devDependencies": {
