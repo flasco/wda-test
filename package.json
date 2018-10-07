@@ -11,7 +11,7 @@
     "wda-init": "cd WebDriverAgent && ./Scripts/bootstrap.sh",
     "wda-clone": "git clone https://github.com/facebook/WebDriverAgent.git",
     "wda-update": "cd WebDriverAgent && git pull",
-    "jest": "jest --no-cache --forceExit --runInBand --detectOpenHandles"
+    "test": "jest --no-cache --forceExit --runInBand --detectOpenHandles"
   },
   "lint-staged": {
     "*.js": [
@@ -21,6 +21,7 @@
   },
   "dependencies": {
     "flasco_wda-driver": "^1.0.3",
+    "opencv4nodejs": "^4.8.0",
     "sharp": "^0.20.8"
   },
   "devDependencies": {

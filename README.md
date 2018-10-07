@@ -8,7 +8,7 @@ just a wda test project.
 brew update # 拉取最新仓库
 brew install carthage
 brew install libimobiledevice # 代理相关，下面有用到
-
+[cmake](https://cmake.org/download/)
 ```
 
 export http_proxy='http://localhost:1081'
