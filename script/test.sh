@@ -5,7 +5,7 @@ PASSWORD="123"
 security unlock-keychain -p $PASSWORD ~/Library/Keychains/login.keychain
 
 # 获取设备的UDID
-UDID="123456789"
+UDID="ddd871b02775cdb6c3b40872d17d41f66436c56b"
 
 #cd $(你的WebDriverAgent所在目录)
 xcodebuild -project ./WebDriverAgent.xcodeproj -scheme WebDriverAgentRunner -destination "id=$UDID" test

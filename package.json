@@ -9,7 +9,7 @@
     "start": "node ./index.js",
     "wda": "sh script/test.sh",
     "wda-init": "cd WebDriverAgent && ./Scripts/bootstrap.sh",
-    "wda-clone": "git clone https://github.com/facebook/WebDriverAgent.git",
+    "wda-clone": "git clone https://github.com/flasco/WebDriverAgent",
     "wda-update": "cd WebDriverAgent && git pull",
     "test": "jest --no-cache --forceExit --runInBand --detectOpenHandles"
   },
@@ -20,7 +20,7 @@
     ]
   },
   "dependencies": {
-    "flasco_wda-driver": "^1.0.3",
+    "flasco_wda-driver": "^1.0.4",
     "opencv4nodejs": "^4.8.0",
     "sharp": "^0.20.8"
   },
