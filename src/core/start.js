@@ -1,18 +1,19 @@
-const BaseApp = require('./base');
+const GameCommon = require('./game');
 const cv = require('opencv4nodejs');
 
-const { isStart, isLoading_1 } = require('../assets');
+const { isStart } = require('../assets');
 
 const { delay } = require('../utils');
 
-class StartApp extends BaseApp {
+class StartGame extends GameCommon {
   constructor(props) {
     super(props);
     this.startFlag = cv.imread(isStart);
-    this.loadingFlag1 = cv.imread(isLoading_1);
   }
 
   async start() {
+    console.log('start check!');
+    console.log('===========');
     await this.couldStart();
   }
 
@@ -31,19 +32,6 @@ class StartApp extends BaseApp {
       await this.couldStart();
     }
   }
-
-  async isLoading() {
-    const img = await this.screenshot();
-    const { simple } = this.judgeMatching(img, this.loadingFlag1);
-    if (simple > 0.8) {
-      console.log('正在转场加载，进入游戏成功！');
-    } else {
-      console.log('没有进入加载，重新点击一遍');
-      await delay(700);
-      await this.tap(this.width / 2, this.height / 2);
-      await this.isLoading();
-    }
-  }
 }
 
-module.exports = StartApp;
+module.exports = StartGame;

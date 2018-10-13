@@ -1,6 +1,7 @@
 const cv = require('opencv4nodejs');
 const { base642Mat } = require('../utils');
 
+// 这里提供一些最基础的能力
 class BaseApp {
   constructor({ client, session, width, height }) {
     this.client = client;
@@ -40,8 +41,8 @@ class BaseApp {
    * @return {cv::Mat|string}
    */
   async screenshot(pathName = '', needMat = true) {
-    const msg = pathName !== '' ? ` pathName - ${pathName}` : '';
-    console.log('screenshot!' + msg);
+    // const msg = pathName !== '' ? ` pathName - ${pathName}` : '';
+    pathName !== '' && console.log(`screenshot! pathName - ${pathName}`);
     const base64 = await this.client.screenshot(pathName);
     if (needMat && base64 != null) {
       return base642Mat(base64);
@@ -62,12 +63,10 @@ class BaseApp {
     }
     const matched = img1.matchTemplate(img2, cv.TM_CCOEFF_NORMED);
     const minMax = matched.minMaxLoc();
-    const { maxLoc, maxVal } = minMax;
+    const { maxLoc: { x, y }, maxVal } = minMax;
 
-    const x = maxLoc.x;
-    const y = maxLoc.y;
-    console.log(`最大相似度 ${maxVal.toFixed(2)}`);
-    console.log(`points - [${x}, ${y}]`);
+    console.log(`maxSimple - ${maxVal.toFixed(2)}`);
+    // console.log(`points - [${x}, ${y}]`);
     if (needShow) {
       img1.drawRectangle(
         new cv.Rect(x, y, img2.cols, img2.rows),

@@ -1,20 +1,34 @@
-const BaseApp = require('./base');
+const GameCommon = require('./game');
 const cv = require('opencv4nodejs');
 
-const { close_1, isLoading_1 } = require('../assets');
+const { close_1, isLoadedFirst } = require('../assets');
 
 const { delay } = require('../utils');
 
-class GameAtHome extends BaseApp {
+class GameAtHome extends GameCommon {
   constructor(props) {
     super(props);
     this.closeFlag1 = cv.imread(close_1);
-    this.loadingFlag1 = cv.imread(isLoading_1);
+    this.isLoadedFirstFlag = cv.imread(isLoadedFirst);
   }
 
   async start() {
-    this.isLoading();
-    this.needCloseWindow();
+    console.log('home check!');
+    console.log('===========');
+    await this.isLoadedFirst();
+  }
+
+  async isLoadedFirst() {
+    const img = await this.screenshot();
+    const { simple } = this.judgeMatching(img, this.isLoadedFirstFlag);
+    if (simple > 0.8) {
+      console.log('已经加载完成！');
+    } else {
+      console.log('未加载完成，检测中...');
+      await this.isLoading();
+      await this.needCloseWindow();
+      await this.isLoadedFirst();
+    }
   }
 
   async needCloseWindow() {
@@ -22,25 +36,8 @@ class GameAtHome extends BaseApp {
     const { simple, point: { x, y } } = this.judgeMatching(img, this.closeFlag1);
     if (simple > 0.8) {
       console.log('需要关闭窗口...');
-      // {{0.0, 0.0}, {736.0, 414.0}}[0.00, 0.00] -> (382.6, 706.8)
-      //  (391.0, 711.0)
-      //tap [362.67, 586.67]
-      await this.tapHold(x, y, 1, false);
-      // await this.tapHold(x + 19, y + 19, false);
+      await this.tap(x + 5, y + 3);
       await delay(400);
-      await this.screenshot('test.png');
-    }
-  }
-
-  async isLoading() {
-    const img = await this.screenshot();
-    const { simple } = this.judgeMatching(img, this.loadingFlag1);
-    if (simple > 0.8) {
-      console.log('正在转场加载！');
-      await this.isLoading();
-    } else {
-      console.log('进入成功！');
-      await await this.screenshot('test.png');
     }
   }
 }

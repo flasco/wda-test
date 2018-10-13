@@ -1,9 +1,8 @@
 
 // const wda = require('wda-driver');
 const wda = require('flasco_wda-driver');
-// const StartApp = require('./core/start');
-// const GameAtHome = require('./core/home');
-
+const StartApp = require('./core/start');
+const GameAtHome = require('./core/home');
 
 
 // com.nhnent.SKQUEST 克鲁赛德战记
@@ -12,27 +11,23 @@ class App {
     const c = new wda.Client('http://localhost:8100');
     // 0ED53A48-CA24-455A-8093-153CC0D35330
     // const sessionId = await c.startApp('com.nhnent.SKQUEST');
-    const sessionId = 'FACA215C-3CDE-480F-8E67-687FDA66872E';
+    const sessionId = '5CFF61AC-F91F-4747-B126-ED4BEA721911';
     const s = await c.quickSession(sessionId);
 
+    const { width, height } = await s.getWindowSize();
 
-    // const { width, height } = await s.getWindowSize();
+    const props = {
+      width,
+      height,
+      client: c,
+      session: s,
+    };
 
-    // console.log(width, height);
-    // 修复过后，宽高正常了！
-    await s.tap(730, 10);
-    // const props = {
-    //   width,
-    //   height,
-    //   client: c,
-    //   session: s,
-    // };
+    const start = new StartApp(props);
+    const atHome = new GameAtHome(props);
 
-    // const start = new StartApp(props);
-    // const atHome = new GameAtHome(props);
-
-    // await start.start();
-    // await atHome.start();
+    await start.start();
+    await atHome.start();
 
     // console.log(await s.orientation());
 
