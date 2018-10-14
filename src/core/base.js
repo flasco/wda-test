@@ -14,10 +14,25 @@ class BaseApp {
    * 点击事件
    * @param {number} x x坐标
    * @param {number} y y坐标
+   * @param {boolean} needRandom 是否需要生成随机量
+   * @param {number} randX x坐标随机的量, 不填的话默认是5
+   * @param {number} randY y坐标随机的量, 不填的话跟randX一个值
    */
-  tap(x, y) {
+  tap(x, y, needRandom = false, randX, randY) {
+    if (randX == null) {
+      randX = 5;
+      randY = 5;
+    }
+    if (randY == null) {
+      randY = randX;
+    }
+    if (needRandom) {
+      x += Math.random() * randX;
+      y += Math.random() * randY;
+    }
     x = Math.round(x * 100) / 100;
     y = Math.round(y * 100) / 100;
+
     console.log(`tap [${x}, ${y}]`);
     return this.session.tap(x, y);
   }
@@ -52,12 +67,12 @@ class BaseApp {
 
   /**
    * 判断图片1中是否包含图片2
-   * @param {cv::Mat} img1 图片1
-   * @param {cv::Mat} img2 图片2
+   * @param {Mat} img1 图片1
+   * @param {Mat} img2 图片2
    * @param {boolean} needShow 是否需要显示结果
-   * @return {object}
+   * @return {object} {simple, point: {x, y}}
    */
-  judgeMatching(img1, img2, needShow = false) {
+  judgeMatching(img1, img2, needLog = false, needShow = false) {
     if (img1 == null || img2 == null) {
       throw new Error('图像不能为空！');
     }
@@ -65,7 +80,7 @@ class BaseApp {
     const minMax = matched.minMaxLoc();
     const { maxLoc: { x, y }, maxVal } = minMax;
 
-    console.log(`maxSimple - ${maxVal.toFixed(2)}`);
+    needLog && console.log(`maxSimple - ${maxVal.toFixed(2)}`);
     // console.log(`points - [${x}, ${y}]`);
     if (needShow) {
       img1.drawRectangle(

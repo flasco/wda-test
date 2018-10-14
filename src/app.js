@@ -11,7 +11,7 @@ class App {
     const c = new wda.Client('http://localhost:8100');
     // 0ED53A48-CA24-455A-8093-153CC0D35330
     // const sessionId = await c.startApp('com.nhnent.SKQUEST');
-    const sessionId = '5CFF61AC-F91F-4747-B126-ED4BEA721911';
+    const sessionId = '377EA34D-9D4F-4F2E-A47F-05E655BB5A26';
     const s = await c.quickSession(sessionId);
 
     const { width, height } = await s.getWindowSize();

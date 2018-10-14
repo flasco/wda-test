@@ -23,12 +23,12 @@ class StartGame extends GameCommon {
 
     if (simple > 0.8) {
       console.log('could start game!');
-      await this.tap(this.width / 2, this.height / 2);
+      await this.tap(this.width / 2, this.height / 2, true, 40);
       await delay(1200);
       await this.isLoading();
     } else {
-      console.log('看起来还不能启动，尝试休眠之后重新判断..');
-      await delay(1000);
+      console.log('loading, waiting...');
+      await delay(1400);
       await this.couldStart();
     }
   }
