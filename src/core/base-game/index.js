@@ -55,9 +55,11 @@ class GameCommon extends Base {
     const { simple } = this.judgeMatching(img, this.loadingFlag1);
     if (simple > 0.8) {
       this.log('转场加载中...');
+      await delay(700);
       await this.waitLoading();
     } else if (this.isGreenLoading(img)) {
       this.log('绿圈加载中...');
+      await delay(700);
       await this.waitLoading();
     }
   }

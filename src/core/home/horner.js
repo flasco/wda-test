@@ -3,6 +3,7 @@ const cv = require('opencv4nodejs');
 
 const { friendsBtn, exchange, exchange_disabled, yesBtn } = require('../../assets');
 const { LEVEL_INFO_MAP } = require('../../constants');
+const { delay } = require('../../utils');
 
 class GameAtHome extends BaseHome {
   constructor(props) {
@@ -42,6 +43,7 @@ class GameAtHome extends BaseHome {
     if (simple > 0.8) {
       await this.tap(x, y, true, 100, 30);
       this.log('交换成功...', LEVEL_INFO_MAP.success);
+      await delay(1200);
       await this.waitLoading();
       await this.clickYes();
       await this.returnHome();
