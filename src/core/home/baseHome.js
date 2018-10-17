@@ -14,14 +14,14 @@ class BaseHome extends BaseGame {
     await this.waitLoading();
     const img = await this.screenshot();
     const { simple } = this.judgeMatching(img, this.isAtHomeFlag);
-    return simple;
+    return simple > 0.8;
   }
 
   async returnHome() {
     const isAtHome = await this.isAtHome();
     if (!isAtHome) {
+      await this.closeWindow();
       await this.waitLoading();
-      await this.needCloseWindow();
       await this.returnHome();
     } else {
       this.log('成功返回Home界面', LEVEL_INFO_MAP.success);
