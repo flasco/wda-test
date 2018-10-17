@@ -2,16 +2,15 @@
 // const wda = require('wda-driver');
 const wda = require('flasco_wda-driver');
 const StartApp = require('./core/start');
-const GameAtHome = require('./core/home');
-
+const Horner = require('./core/home/horner');
 
 // com.nhnent.SKQUEST 克鲁赛德战记
 class App {
   async start() {
     const c = new wda.Client('http://localhost:8100');
     // 0ED53A48-CA24-455A-8093-153CC0D35330
-    // const sessionId = await c.startApp('com.nhnent.SKQUEST');
-    const sessionId = '377EA34D-9D4F-4F2E-A47F-05E655BB5A26';
+    const sessionId = await c.startApp('com.nhnent.SKQUEST');
+    // const sessionId = '4A1AB2A5-F7C5-4477-BB8A-176042FC3FE0';
     const s = await c.quickSession(sessionId);
 
     const { width, height } = await s.getWindowSize();
@@ -24,10 +23,10 @@ class App {
     };
 
     const start = new StartApp(props);
-    const atHome = new GameAtHome(props);
+    const exchange = new Horner(props);
 
     await start.start();
-    await atHome.start();
+    await exchange.start();
 
     // console.log(await s.orientation());
 

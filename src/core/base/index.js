@@ -1,9 +1,10 @@
 const cv = require('opencv4nodejs');
-const { base642Mat } = require('../utils');
+const { base642Mat } = require('../../utils');
+const { TIP_COLOR, TIP_TEXT, LEVEL_INFO_MAP } = require('../../constants');
 
 // 这里提供一些最基础的能力
 class BaseApp {
-  constructor({ client, session, width, height }) {
+  constructor({ client = '', session = '', width = '', height = '' }) {
     this.client = client;
     this.session = session;
     this.width = width;
@@ -33,7 +34,7 @@ class BaseApp {
     x = Math.round(x * 100) / 100;
     y = Math.round(y * 100) / 100;
 
-    console.log(`tap [${x}, ${y}]`);
+    this.log(`tap [${x}, ${y}]`);
     return this.session.tap(x, y);
   }
 
@@ -45,7 +46,7 @@ class BaseApp {
   tapHold(x, y, delay = 1.0) {
     x = Math.round(x * 100) / 100;
     y = Math.round(y * 100) / 100;
-    console.log(`tapHold [${x}, ${y}]`);
+    this.log(`tapHold [${x}, ${y}]`);
     return this.session.tapHold(x, y, delay);
   }
 
@@ -97,6 +98,20 @@ class BaseApp {
       simple: maxVal,
       point: { x: x / 3, y: y / 3 }
     };
+  }
+
+  /**
+   * log美化
+   * @param {string} str 提示文案
+   * @param {Symbol} level 从constants里取
+   */
+  log(str, level = LEVEL_INFO_MAP.info) {
+    if (TIP_COLOR[level] != null) {
+      const tip = TIP_COLOR[level](TIP_TEXT[level]);
+      console.log(`${tip} ${str}`);
+    } else {
+      console.log(str);
+    }
   }
 }
 

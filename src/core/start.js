@@ -1,19 +1,20 @@
-const GameCommon = require('./game');
 const cv = require('opencv4nodejs');
+const BaseGame = require('./base-game');
 
 const { isStart } = require('../assets');
 
 const { delay } = require('../utils');
+const { LEVEL_INFO_MAP } = require('../constants');
 
-class StartGame extends GameCommon {
+class StartGame extends BaseGame {
   constructor(props) {
     super(props);
     this.startFlag = cv.imread(isStart);
   }
 
   async start() {
-    console.log('start check!');
-    console.log('===========');
+    this.log('start check!');
+    this.log('===========');
     await this.couldStart();
   }
 
@@ -22,12 +23,12 @@ class StartGame extends GameCommon {
     const { simple } = this.judgeMatching(img, this.startFlag);
 
     if (simple > 0.8) {
-      console.log('could start game!');
+      this.log('could start game!', LEVEL_INFO_MAP.success);
       await this.tap(this.width / 2, this.height / 2, true, 40);
       await delay(1200);
-      await this.isLoading();
+      await this.waitLoading();
     } else {
-      console.log('loading, waiting...');
+      this.log('loading, waiting...');
       await delay(1400);
       await this.couldStart();
     }
