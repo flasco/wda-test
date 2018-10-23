@@ -21,8 +21,7 @@
   },
   "dependencies": {
     "flasco_wda-driver": "^1.0.4",
-    "opencv4nodejs": "^4.8.0",
-    "sharp": "^0.20.8"
+    "opencv4nodejs": "^4.9.0"
   },
   "devDependencies": {
     "eslint": "^5.6.0",
