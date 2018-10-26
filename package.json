@@ -9,7 +9,7 @@
     "start": "node ./index.js",
     "wda": "sh script/test.sh",
     "wda-init": "cd WebDriverAgent && ./Scripts/bootstrap.sh",
-    "wda-clone": "git clone https://github.com/flasco/WebDriverAgent",
+    "wda-clone": "git clone --depth=1 https://github.com/flasco/WebDriverAgent",
     "wda-update": "cd WebDriverAgent && git pull",
     "test": "jest --no-cache --forceExit --runInBand --detectOpenHandles"
   },
