@@ -8,8 +8,10 @@ just a wda test project.
 brew update # 拉取最新仓库
 brew install carthage
 brew install libimobiledevice # 代理相关，下面有用到
-[cmake](https://cmake.org/download/)
+brew install opencv # 这个需要再装一下cmake, command版的，具体可以百度 https://cmake.org/download/
 ```
+
+设置环境变量 `export OPENCV4NODEJS_DISABLE_AUTOBUILD=true`，跳过重复安装opencv
 
 export http_proxy='http://localhost:1081'
 export https_proxy='http://localhost:1081'
