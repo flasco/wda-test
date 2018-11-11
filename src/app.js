@@ -1,32 +1,32 @@
 
 // const wda = require('wda-driver');
 const wda = require('flasco_wda-driver');
-const StartApp = require('./core/start');
-const Horner = require('./core/home/horner');
 
+const TimeDungeon = require('./core/dungeon/time');
 // com.nhnent.SKQUEST 克鲁赛德战记
 class App {
   async start() {
-    const c = new wda.Client('http://localhost:8100');
-    const sessionId = await c.startApp('com.nhnent.SKQUEST');
-    // const sessionId = 'C419F809-46CB-41D6-B57D-36DCE22CB18F';
-    const s = await c.quickSession(sessionId);
+    const client = new wda.Client('http://localhost:8100');
+    let {
+      value: { bundleId },
+      sessionId,
+    } = await client.getActiveAppInfo();
+    if (bundleId !== 'com.nhnent.SKQUEST') {
+      sessionId = await client.startApp('com.nhnent.SKQUEST');
+    }
+    const session = await client.quickSession(sessionId);
 
-    const { width, height } = await s.getWindowSize();
+    const { width, height } = await session.getWindowSize();
 
     const props = {
       width,
       height,
-      client: c,
-      session: s,
+      client,
+      session,
     };
 
-    const start = new StartApp(props);
-    const exchange = new Horner(props);
-
-    await start.start();
-    await exchange.start();
-
+    const time = new TimeDungeon(props);
+    await time.goToGate();
   }
 }
 

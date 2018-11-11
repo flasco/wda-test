@@ -1,4 +1,4 @@
-const BaseHome = require('./baseHome');
+const BaseHome = require('./base-home');
 const cv = require('opencv4nodejs');
 
 const { friendsBtn, exchange, exchange_disabled, yesBtn } = require('../../assets');

@@ -1,7 +1,7 @@
 const Base = require('../base');
 const cv = require('opencv4nodejs');
 
-const { isLoading_1, close_1 } = require('../../assets');
+const { isLoading_1, close_1, isAtHome } = require('../../assets');
 const { delay } = require('../../utils');
 const { LEVEL_INFO_MAP } = require('../../constants');
 
@@ -10,6 +10,7 @@ class GameCommon extends Base {
   constructor(props) {
     super(props);
     this.loadingFlag1 = cv.imread(isLoading_1);
+    this.isAtHomeFlag = cv.imread(isAtHome);
     this.closeFlag1 = cv.imread(close_1);
     this.greenLoadRect = new cv.Rect(1029, 546, 153, 153);
   }
@@ -70,6 +71,30 @@ class GameCommon extends Base {
   async closeWindow() {
     await this.judgeClick(this.closeFlag1, 'close_btn');
     await delay(1400);
+  }
+
+  /**
+   * 判断是否在家
+   */
+  async isAtHome() {
+    await this.waitLoading();
+    const img = await this.screenshot();
+    const { simple } = this.judgeMatching(img, this.isAtHomeFlag);
+    return simple > 0.8;
+  }
+
+  /**
+   * 返回home
+   */
+  async returnHome() {
+    const isAtHome = await this.isAtHome();
+    if (!isAtHome) {
+      await this.closeWindow();
+      await this.waitLoading();
+      await this.returnHome();
+    } else {
+      this.log('成功返回Home界面', LEVEL_INFO_MAP.success);
+    }
   }
 
   async judgeSimple(containImg) {

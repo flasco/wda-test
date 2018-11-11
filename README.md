@@ -13,6 +13,7 @@ brew install opencv # 这个需要再装一下cmake, command版的，具体可�
 
 设置环境变量 `export OPENCV4NODEJS_DISABLE_AUTOBUILD=true`，跳过重复安装opencv
 
+export no_proxy="localhost,127.0.0.1,localaddress"
 export http_proxy='http://localhost:1081'
 export https_proxy='http://localhost:1081'
 

@@ -1,7 +1,7 @@
-const baseHome = require('./baseHome');
+const baseHome = require('./base-home');
 const cv = require('opencv4nodejs');
 
-const { breadBtn, getBreads } = require('../assets');
+const { breadBtn, getBreads } = require('../../assets');
 
 class Breads extends baseHome {
   constructor(props) {

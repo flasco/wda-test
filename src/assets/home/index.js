@@ -2,7 +2,12 @@ module.exports = {
   isAtHome: `${__dirname}/isAtHome.png`,
 
   // 冒险相关
-  adventure: `${__dirname}/adventure/adventure.png`,
+  adventure1: `${__dirname}/adventure/adventure1.png`,
+  adventure2: `${__dirname}/adventure/advanture2.png`,
+  arena: `${__dirname}/adventure/arena.png`,
+  dungeon: `${__dirname}/adventure/dungeon.png`,
+
+  exploreFinish: `${__dirname}/adventure/explore-finish.png`,
 
   // 面包相关
   breadBtn: `${__dirname}/bread/breadBtn.png`,
