@@ -20,7 +20,7 @@
     ]
   },
   "dependencies": {
-    "flasco_wda-driver": "^1.0.5",
+    "flasco_wda-driver": "^1.1.1",
     "node-notifier": "^5.3.0",
     "opencv4nodejs": "^4.9.0"
   },
