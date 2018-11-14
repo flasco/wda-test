@@ -4,6 +4,10 @@ const cv = require('opencv4nodejs');
 const { breadBtn, getBreads } = require('../../assets');
 
 class Breads extends baseHome {
+  static get uniqueId() {
+    return 'home-bread';
+  }
+
   constructor(props) {
     super(props);
     this.breadBtnFlag = cv.imread(breadBtn);

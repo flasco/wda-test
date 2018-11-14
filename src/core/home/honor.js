@@ -5,7 +5,11 @@ const { friendsBtn, exchange, exchange_disabled, yesBtn } = require('../../asset
 const { LEVEL_INFO_MAP } = require('../../constants');
 const { delay } = require('../../utils');
 
-class GameAtHome extends BaseHome {
+class Honor extends BaseHome {
+  static get uniqueId() {
+    return 'home-Honor';
+  }
+
   constructor(props) {
     super(props);
     this.friendsBtnFlag = cv.imread(friendsBtn);
@@ -15,10 +19,10 @@ class GameAtHome extends BaseHome {
   }
 
   async start() {
-    this.log('horner...');
+    this.log('Honor...');
     await this.returnHome();
     await this.openFriends();
-    await this.exchangeHorner();
+    await this.exchangeHonor();
   }
 
 
@@ -36,7 +40,7 @@ class GameAtHome extends BaseHome {
     }
   }
 
-  async exchangeHorner() {
+  async exchangeHonor() {
     await this.waitLoading();
     const img = await this.screenshot();
     const { simple, point: { x, y } } = this.judgeMatching(img, this.exchangeFlag);
@@ -60,4 +64,4 @@ class GameAtHome extends BaseHome {
   }
 }
 
-module.exports = GameAtHome;
+module.exports = Honor;

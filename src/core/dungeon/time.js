@@ -9,6 +9,10 @@ const { adventure1, adventure2 } = require('../../assets/home');
 const { LEVEL_INFO_MAP } = require('../../constants');
 
 class TimeDungeon extends BaseDungeon {
+  static get uniqueId() {
+    return 'dungeon-time';
+  }
+
   constructor(props) {
     super(props);
 
