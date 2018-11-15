@@ -16,7 +16,10 @@ class Breads extends baseHome {
 
   async openBreads() {
     const img = await this.screenshot();
-    const { simple, point: { x, y } } = this.judgeMatching(img, this.breadBtnFlag);
+    const {
+      simple,
+      point: { x, y },
+    } = this.judgeMatching(img, this.breadBtnFlag);
     if (simple > 0.8) {
       await this.tap(x, y, true);
       await this.waitLoading();
@@ -26,7 +29,10 @@ class Breads extends baseHome {
 
   async checkBreads() {
     const img = await this.screenshot();
-    const { simple, point: { x, y } } = this.judgeMatching(img, this.breadGetFlag);
+    const {
+      simple,
+      point: { x, y },
+    } = this.judgeMatching(img, this.breadGetFlag);
     if (simple > 0.8) {
       this.log('有面包可领');
       await this.tap(x, y, true);

@@ -96,7 +96,7 @@ class BaseApp {
     // 之所以返回除以3，是因为屏幕缩放倍数的原因
     return {
       simple: maxVal,
-      point: { x: x / 3, y: y / 3 }
+      point: { x: x / 3, y: y / 3 },
     };
   }
 

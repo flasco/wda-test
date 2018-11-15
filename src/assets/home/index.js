@@ -16,5 +16,5 @@ module.exports = {
   // 好友相关
   friendsBtn: `${__dirname}/friend/friendsBtn.png`,
   exchange: `${__dirname}/friend/exchange.png`,
-  exchange_disabled: `${__dirname}/friend/exchange-disabled.png`,
+  exchangeDisabled: `${__dirname}/friend/exchange-disabled.png`,
 };

@@ -1,7 +1,12 @@
 const BaseHome = require('./base-home');
 const cv = require('opencv4nodejs');
 
-const { friendsBtn, exchange, exchange_disabled, yesBtn } = require('../../assets');
+const {
+  friendsBtn,
+  exchange,
+  exchangeDisabled,
+  yesBtn,
+} = require('../../assets');
 const { LEVEL_INFO_MAP } = require('../../constants');
 const { delay } = require('../../utils');
 
@@ -15,7 +20,7 @@ class Honor extends BaseHome {
     this.friendsBtnFlag = cv.imread(friendsBtn);
     this.yesBtnFlag = cv.imread(yesBtn);
     this.exchangeFlag = cv.imread(exchange);
-    this.exchangeDisabledFlag = cv.imread(exchange_disabled);
+    this.exchangeDisabledFlag = cv.imread(exchangeDisabled);
   }
 
   async start() {
@@ -24,7 +29,6 @@ class Honor extends BaseHome {
     await this.openFriends();
     await this.exchangeHonor();
   }
-
 
   async clickYes() {
     await this.judgeClick(this.yesBtnFlag, 'yes_btn', 2);
@@ -43,7 +47,10 @@ class Honor extends BaseHome {
   async exchangeHonor() {
     await this.waitLoading();
     const img = await this.screenshot();
-    const { simple, point: { x, y } } = this.judgeMatching(img, this.exchangeFlag);
+    const {
+      simple,
+      point: { x, y },
+    } = this.judgeMatching(img, this.exchangeFlag);
     if (simple > 0.8) {
       await this.tap(x, y, true, 100, 30);
       this.log('交换成功...', LEVEL_INFO_MAP.success);

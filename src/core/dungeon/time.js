@@ -31,7 +31,7 @@ class TimeDungeon extends BaseDungeon {
       console.log('在城市');
       return {
         position: 'city',
-        point
+        point,
       };
     }
     const result2 = this.judgeMatching(img, this.adventure2);
@@ -39,12 +39,12 @@ class TimeDungeon extends BaseDungeon {
       console.log('在传送门');
       return {
         position: 'gate',
-        point: result2.point
+        point: result2.point,
       };
     }
     return {
       position: 'unknown',
-      point: null
+      point: null,
     };
   }
 
@@ -52,7 +52,7 @@ class TimeDungeon extends BaseDungeon {
     const img = await this.screenshot();
     const {
       position,
-      point: { x, y }
+      point: { x, y },
     } = await this.cityOrGate(img);
     if (position === 'city') {
       await this.tap(x, y, true);

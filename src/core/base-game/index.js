@@ -1,7 +1,7 @@
 const Base = require('../base');
 const cv = require('opencv4nodejs');
 
-const { isLoading_1, close_1, isAtHome } = require('../../assets');
+const { isLoading1, close1, isAtHome } = require('../../assets');
 const { delay } = require('../../utils');
 const { LEVEL_INFO_MAP } = require('../../constants');
 
@@ -9,9 +9,9 @@ const { LEVEL_INFO_MAP } = require('../../constants');
 class GameCommon extends Base {
   constructor(props) {
     super(props);
-    this.loadingFlag1 = cv.imread(isLoading_1);
+    this.loadingFlag1 = cv.imread(isLoading1);
     this.isAtHomeFlag = cv.imread(isAtHome);
-    this.closeFlag1 = cv.imread(close_1);
+    this.closeFlag1 = cv.imread(close1);
     this.greenLoadRect = new cv.Rect(1029, 546, 153, 153);
   }
 
@@ -35,11 +35,7 @@ class GameCommon extends Base {
         }
         const curPoi = curRow[m];
         const [h, s, v] = curPoi;
-        if (
-          (h >= 38 && h <= 75) &&
-          (s > 200 && s < 220) &&
-          (v > 180)
-        ) {
+        if (h >= 38 && h <= 75 && (s > 200 && s < 220) && v > 180) {
           greenPoints++;
         }
       }
@@ -106,7 +102,10 @@ class GameCommon extends Base {
   async judgeClick(containImg, announce = '', depth = 1, stack = 0, scCnt = 0) {
     if (announce != '' && stack === 0) announce = ` ${announce}`;
     const img = await this.screenshot();
-    let { simple, point: { x, y } } = this.judgeMatching(img, containImg);
+    const {
+      simple,
+      point: { x, y },
+    } = this.judgeMatching(img, containImg);
     if (simple > 0.8) {
       this.log(`find btn${announce}, click...`);
       await this.tap(x, y, true);
@@ -119,7 +118,6 @@ class GameCommon extends Base {
       this.log(`can't find btn${announce}...`, LEVEL_INFO_MAP.error);
     }
   }
-
 }
 
 module.exports = GameCommon;
