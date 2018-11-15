@@ -1,7 +1,7 @@
 const Base = require('../base');
 const cv = require('opencv4nodejs');
 
-const { isLoading1, close1, isAtHome } = require('../../assets');
+const { isLoading1, close1, yesBtn, adBreadYes } = require('../../assets');
 const { delay } = require('../../utils');
 const { LEVEL_INFO_MAP } = require('../../constants');
 
@@ -10,14 +10,16 @@ class GameCommon extends Base {
   constructor(props) {
     super(props);
     this.loadingFlag1 = cv.imread(isLoading1);
-    this.isAtHomeFlag = cv.imread(isAtHome);
     this.closeFlag1 = cv.imread(close1);
+    this.yesBtnFlag = cv.imread(yesBtn);
+    this.ADBreadYesFlag = cv.imread(adBreadYes);
     this.greenLoadRect = new cv.Rect(1029, 546, 153, 153);
   }
 
   /**
-   * 判断是否在绿圈加载
+   * @description 判断是否在绿圈加载
    * @param {cv::Mat} img 图片
+   * @returns {boolean}
    */
   isGreenLoading(img) {
     const roi = img.getRegion(this.greenLoadRect);
@@ -45,7 +47,7 @@ class GameCommon extends Base {
   }
 
   /**
-   * 检测是否在加载状态
+   * @description 检测是否在加载状态，一直等到不是绿圈为止
    */
   async waitLoading() {
     const img = await this.screenshot();
@@ -62,39 +64,44 @@ class GameCommon extends Base {
   }
 
   /**
-   * 检测是否有需要关闭的弹窗
+   * @description 检测是否有需要点击的确定按钮，是则点击并返回true，否则返回false
+   * @returns {boolean} 否有需要点击的确定按钮
    */
-  async closeWindow() {
-    await this.judgeClick(this.closeFlag1, 'close_btn');
-    await delay(1400);
-  }
-
-  /**
-   * 判断是否在家
-   */
-  async isAtHome() {
-    await this.waitLoading();
+  async clickFlag(flag) {
     const img = await this.screenshot();
-    const { simple } = this.judgeMatching(img, this.isAtHomeFlag);
-    return simple > 0.8;
-  }
-
-  /**
-   * 返回home
-   */
-  async returnHome() {
-    const isAtHome = await this.isAtHome();
-    if (!isAtHome) {
-      await this.closeWindow();
-      await this.waitLoading();
-      await this.returnHome();
-    } else {
-      this.log('成功返回Home界面', LEVEL_INFO_MAP.success);
+    const {
+      simple,
+      point: { x, y }
+    } = this.judgeMatching(img, flag);
+    if (simple > 0.8) {
+      await this.tap(x, y, true);
+      return true;
     }
+    return false;
   }
 
-  async judgeSimple(containImg) {
-    const img = await this.screenshot();
+  async runClickFlagCnt(needCnt = 1, maxFailedCnt = 3, flag) {
+    let cnt = 0;
+    let failedCnt = 0;
+    while (cnt < needCnt) {
+      await delay(1100);
+      const isClick = await this.clickFlag(flag);
+      if (isClick) {
+        cnt++;
+        failedCnt = 0;
+      } else {
+        failedCnt++;
+      }
+      if (failedCnt > maxFailedCnt) break;
+    }
+    this.log(`成功点击${cnt}次`, LEVEL_INFO_MAP.success);
+  }
+
+  async judgeSimple(img, containImg) {
+    if (containImg == null) {
+      containImg = img;
+      img = await this.screenshot();
+    }
     const { simple } = this.judgeMatching(img, containImg);
     return simple;
   }

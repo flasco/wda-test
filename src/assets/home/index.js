@@ -1,6 +1,4 @@
 module.exports = {
-  isAtHome: `${__dirname}/isAtHome.png`,
-
   // 冒险相关
   adventure1: `${__dirname}/adventure/adventure1.png`,
   adventure2: `${__dirname}/adventure/advanture2.png`,
@@ -12,6 +10,10 @@ module.exports = {
   // 面包相关
   breadBtn: `${__dirname}/bread/breadBtn.png`,
   getBreads: `${__dirname}/bread/getBreads.png`,
+  adBreads: `${__dirname}/bread/adBreads.png`,
+  adClose: `${__dirname}/bread/adClose.png`,
+  adBreadYes: `${__dirname}/bread/adBreadYes.png`,
+  isADLimit: `${__dirname}/bread/isADLimit.png`,
 
   // 好友相关
   friendsBtn: `${__dirname}/friend/friendsBtn.png`,

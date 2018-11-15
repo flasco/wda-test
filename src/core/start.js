@@ -16,6 +16,7 @@ class StartGame extends BaseGame {
     this.log('start check!');
     this.log('===========');
     await this.couldStart();
+    await this.runClickFlagCnt(3, 3, this.closeFlag1);
   }
 
   async couldStart() {

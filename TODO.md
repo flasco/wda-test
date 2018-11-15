@@ -1,6 +1,6 @@
 ## TODO list
 - [x] 好友互送荣誉
-- [ ] 烘焙坊自动面包 [nextTarget]
+- [x] 烘焙坊自动面包 [nextTarget]
 - [ ] 探险收菜 [nextTarget]
 - [ ] 灵魂要塞farm [important]
 - [ ] 红莲farm [important]

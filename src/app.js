@@ -2,7 +2,10 @@
 // const wda = require('wda-driver');
 const wda = require('flasco_wda-driver');
 
-const TimeDungeon = require('./core/dungeon/time');
+// const TimeDungeon = require('./core/dungeon/time');
+// const Start = require('./core/start');
+// const Breads = require('./core/home/breads');
+const Honor = require('./core/home/honor');
 // com.nhnent.SKQUEST 克鲁赛德战记
 class App {
   async start() {
@@ -25,8 +28,10 @@ class App {
       session,
     };
 
-    const time = new TimeDungeon(props);
-    await time.goToGate();
+    // const time = new TimeDungeon(props);
+    // const start = new Start(props);
+    const breads = new Honor(props);
+    await breads.start();
   }
 }
 

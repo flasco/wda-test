@@ -65,13 +65,21 @@ class BaseApp {
     }
     return base64;
   }
-
   /**
    * 判断图片1中是否包含图片2
+   * 
+   * @typedef {Object} Point
+   * @property {number} x The X Coordinate
+   * @property {number} y The Y Coordinate
+   * 
+   * @typedef {Object} MatchRes
+   * @property {number} simple simple value
+   * @property {Point} point point dot
+   * 
    * @param {Mat} img1 图片1
    * @param {Mat} img2 图片2
    * @param {boolean} needShow 是否需要显示结果
-   * @return {object} {simple, point: {x, y}}
+   * @return {MatchRes}
    */
   judgeMatching(img1, img2, needLog = false, needShow = false) {
     if (img1 == null || img2 == null) {

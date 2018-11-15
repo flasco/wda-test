@@ -11,6 +11,8 @@
     "wda-init": "cd WebDriverAgent && ./Scripts/bootstrap.sh",
     "wda-clone": "git clone --depth=1 https://github.com/flasco/WebDriverAgent",
     "wda-update": "cd WebDriverAgent && git pull",
+    "proxy": "iproxy 8100 8100",
+    "screenshot": "node __test__/screenshot.test.js",
     "test": "jest --no-cache --forceExit --runInBand --detectOpenHandles"
   },
   "lint-staged": {

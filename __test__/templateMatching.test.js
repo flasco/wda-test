@@ -2,8 +2,8 @@ const cv = require('opencv4nodejs');
 
 test('测试模式匹配', async () => {
 
-  const img1 = cv.imread(`${__dirname}/../src/testImg/test.png`);
-  const closeImg = cv.imread(`${__dirname}/../close.png`);
+  const img1 = cv.imread(`${__dirname}/../1542295207030.png`);
+  const closeImg = cv.imread(`${__dirname}/../src/assets/home/bread/adBreads.png`);
   const matched = img1.matchTemplate(closeImg, cv.TM_CCOEFF_NORMED);
   const minMax = matched.minMaxLoc();
   const { maxLoc: { x, y }, maxVal } = minMax;

@@ -5,7 +5,6 @@ const {
   friendsBtn,
   exchange,
   exchangeDisabled,
-  yesBtn,
 } = require('../../assets');
 const { LEVEL_INFO_MAP } = require('../../constants');
 const { delay } = require('../../utils');
@@ -18,46 +17,42 @@ class Honor extends BaseHome {
   constructor(props) {
     super(props);
     this.friendsBtnFlag = cv.imread(friendsBtn);
-    this.yesBtnFlag = cv.imread(yesBtn);
     this.exchangeFlag = cv.imread(exchange);
     this.exchangeDisabledFlag = cv.imread(exchangeDisabled);
   }
 
   async start() {
     this.log('Honor...');
-    await this.returnHome();
     await this.openFriends();
     await this.exchangeHonor();
   }
 
-  async clickYes() {
-    await this.judgeClick(this.yesBtnFlag, 'yes_btn', 2);
-  }
-
   async openFriends() {
-    const isAtHome = await this.isAtHome();
-    if (isAtHome) {
-      await this.waitLoading();
-      await this.judgeClick(this.friendsBtnFlag);
+    const img = await this.screenshot();
+    const {
+      simple,
+      point: { x, y }
+    } = this.judgeMatching(img, this.friendsBtnFlag);
+
+    if (simple > 0.8) {
+      await this.tap(x, y, true);
     } else {
-      this.log('当前不在家里', LEVEL_INFO_MAP.warn);
+      this.log('没有找到好友按钮', LEVEL_INFO_MAP.warn);
     }
   }
 
   async exchangeHonor() {
-    await this.waitLoading();
     const img = await this.screenshot();
     const {
       simple,
-      point: { x, y },
+      point: { x, y }
     } = this.judgeMatching(img, this.exchangeFlag);
     if (simple > 0.8) {
       await this.tap(x, y, true, 100, 30);
       this.log('交换成功...', LEVEL_INFO_MAP.success);
       await delay(1200);
       await this.waitLoading();
-      await this.clickYes();
-      await this.returnHome();
+      await this.runClickFlagCnt(1, 3, this.yesBtnFlag);
     } else {
       const result = this.judgeMatching(img, this.exchangeDisabledFlag);
       if (result.simple > 0.8) {
