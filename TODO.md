@@ -1,6 +1,7 @@
 ## TODO list
 - [x] 好友互送荣誉
 - [x] 烘焙坊自动面包 [nextTarget]
+- [ ] 优化flag获取，封装成一个flag-pool [nextTarget]
 - [ ] 探险收菜 [nextTarget]
 - [ ] 灵魂要塞farm [important]
 - [ ] 红莲farm [important]
