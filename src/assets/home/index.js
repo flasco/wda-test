@@ -2,8 +2,16 @@ module.exports = {
   // 冒险相关
   adventure1: `${__dirname}/adventure/adventure1.png`,
   adventure2: `${__dirname}/adventure/advanture2.png`,
-  arena: `${__dirname}/adventure/arena.png`,
   dungeon: `${__dirname}/adventure/dungeon.png`,
+
+  arena: `${__dirname}/adventure/arena/arena.png`,
+  arena1: `${__dirname}/adventure/arena/arena1.png`,
+  arena2: `${__dirname}/adventure/arena/arena2.png`,
+  giveTicket: `${__dirname}/adventure/arena/giveTicket.png`,
+  prepareFight: `${__dirname}/adventure/arena/prepareFight.png`,
+  startFight: `${__dirname}/adventure/arena/startFight.png`,
+  fightFinish: `${__dirname}/adventure/arena/fightFinish.png`,
+  emptyTickets: `${__dirname}/adventure/arena/emptyTickets.png`,
 
   exploreFinish: `${__dirname}/adventure/explore-finish.png`,
 

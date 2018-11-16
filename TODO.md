@@ -1,14 +1,14 @@
 ## TODO list
 - [x] 好友互送荣誉
 - [x] 烘焙坊自动面包 [nextTarget]
-- [ ] 优化flag获取，封装成一个flag-pool [nextTarget]
+- [x] 优化flag获取，封装成一个flag-pool [nextTarget]
+- [x] 斗技场简单的自动<大师级之后自己手动(因为强度不够)> [important]
 - [ ] 探险收菜 [nextTarget]
 - [ ] 灵魂要塞farm [important]
 - [ ] 红莲farm [important]
 - [ ] 自动测试斗技场领厕纸
 - [ ] 自动去挂机钓鱼
 - [ ] 信箱接收
-- [ ] 斗技场简单的自动<大师级之后自己手动(因为强度不够)> [important]
 - [ ] 挑战副本的挂机自动研究 - 需要研究战斗系统 [important]
 - [ ] 斗技场的高级挂机<等副本能自动了这个也可以了> [important]
 - [ ] 自动刷popo<如果要冲斗鸡的话，但是目前没这个需求，最后再做>
