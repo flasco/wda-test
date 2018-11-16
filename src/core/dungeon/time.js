@@ -1,7 +1,6 @@
 // 时间地牢
-const cv = require('opencv4nodejs');
-
 const { delay } = require('../../utils');
+const flagPool = require('../flag-pool');
 
 const BaseDungeon = require('./base-dungeon');
 const { adventure1, adventure2 } = require('../../assets/home');
@@ -13,12 +12,6 @@ class TimeDungeon extends BaseDungeon {
     return 'dungeon-time';
   }
 
-  constructor(props) {
-    super(props);
-
-    this.adventure1 = cv.imread(adventure1);
-    this.adventure2 = cv.imread(adventure2);
-  }
   async start() {
     // 假设从home开始
     await this.fight();
@@ -26,7 +19,7 @@ class TimeDungeon extends BaseDungeon {
 
   async cityOrGate(img = null) {
     if (img == null) img = await this.screenshot();
-    const { simple, point } = this.judgeMatching(img, this.adventure1);
+    const { simple, point } = this.judgeMatching(img, flagPool.getFlag(adventure1));
     if (simple > 0.8) {
       console.log('在城市');
       return {
@@ -34,7 +27,7 @@ class TimeDungeon extends BaseDungeon {
         point,
       };
     }
-    const result2 = this.judgeMatching(img, this.adventure2);
+    const result2 = this.judgeMatching(img, flagPool.getFlag(adventure2));
     if (result2.simple > 0.8) {
       console.log('在传送门');
       return {

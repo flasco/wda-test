@@ -1,5 +1,5 @@
-const cv = require('opencv4nodejs');
 const BaseGame = require('./base-game');
+const flagPool = require('./flag-pool');
 
 const { isStart } = require('../assets');
 
@@ -7,21 +7,16 @@ const { delay } = require('../utils');
 const { LEVEL_INFO_MAP } = require('../constants');
 
 class StartGame extends BaseGame {
-  constructor(props) {
-    super(props);
-    this.startFlag = cv.imread(isStart);
-  }
-
   async start() {
     this.log('start check!');
     this.log('===========');
     await this.couldStart();
-    await this.runClickFlagCnt(3, 3, this.closeFlag1);
+    await this.runClickFlagCnt(3, 3, flagPool.getFlag(this.closeFlag));
   }
 
   async couldStart() {
     const img = await this.screenshot();
-    const { simple } = this.judgeMatching(img, this.startFlag);
+    const { simple } = this.judgeMatching(img, flagPool.getFlag(isStart));
 
     if (simple > 0.8) {
       this.log('could start game!', LEVEL_INFO_MAP.success);

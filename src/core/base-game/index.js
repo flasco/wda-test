@@ -1,7 +1,8 @@
 const Base = require('../base');
 const cv = require('opencv4nodejs');
+const flagPool = require('../flag-pool');
 
-const { isLoading1, close1, yesBtn, adBreadYes } = require('../../assets');
+const { isLoading1, close1 } = require('../../assets');
 const { delay } = require('../../utils');
 const { LEVEL_INFO_MAP } = require('../../constants');
 
@@ -9,11 +10,8 @@ const { LEVEL_INFO_MAP } = require('../../constants');
 class GameCommon extends Base {
   constructor(props) {
     super(props);
-    this.loadingFlag1 = cv.imread(isLoading1);
-    this.closeFlag1 = cv.imread(close1);
-    this.yesBtnFlag = cv.imread(yesBtn);
-    this.ADBreadYesFlag = cv.imread(adBreadYes);
     this.greenLoadRect = new cv.Rect(1029, 546, 153, 153);
+    this.closeFlag = close1;
   }
 
   /**
@@ -51,7 +49,7 @@ class GameCommon extends Base {
    */
   async waitLoading() {
     const img = await this.screenshot();
-    const { simple } = this.judgeMatching(img, this.loadingFlag1);
+    const { simple } = this.judgeMatching(img, flagPool.getFlag(isLoading1));
     if (simple > 0.8) {
       this.log('转场加载中...');
       await delay(700);
@@ -104,26 +102,6 @@ class GameCommon extends Base {
     }
     const { simple } = this.judgeMatching(img, containImg);
     return simple;
-  }
-
-  async judgeClick(containImg, announce = '', depth = 1, stack = 0, scCnt = 0) {
-    if (announce != '' && stack === 0) announce = ` ${announce}`;
-    const img = await this.screenshot();
-    const {
-      simple,
-      point: { x, y },
-    } = this.judgeMatching(img, containImg);
-    if (simple > 0.8) {
-      this.log(`find btn${announce}, click...`);
-      await this.tap(x, y, true);
-      scCnt++;
-    }
-    if (depth > 1) {
-      await this.judgeClick(containImg, announce, depth - 1, stack + 1, scCnt);
-    } else if (stack > 0 && scCnt < 1) {
-      // 此时
-      this.log(`can't find btn${announce}...`, LEVEL_INFO_MAP.error);
-    }
   }
 }
 

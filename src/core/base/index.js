@@ -12,12 +12,13 @@ class BaseApp {
   }
 
   /**
-   * 点击事件
+   * @description 点击事件
    * @param {number} x x坐标
    * @param {number} y y坐标
    * @param {boolean} needRandom 是否需要生成随机量
    * @param {number} randX x坐标随机的量, 不填的话默认是5
    * @param {number} randY y坐标随机的量, 不填的话跟randX一个值
+   * @returns {Promise<Function>}
    */
   tap(x, y, needRandom = false, randX, randY) {
     if (randX == null) {
@@ -39,9 +40,10 @@ class BaseApp {
   }
 
   /**
-   * 对xy坐标进行转换处理的点击事件
+   * @description 长按
    * @param {number} x x坐标
    * @param {number} y y坐标
+   * @returns {Promise<Function>}
    */
   tapHold(x, y, delay = 1.0) {
     x = Math.round(x * 100) / 100;
@@ -54,7 +56,7 @@ class BaseApp {
    * 截屏
    * @param {string} pathName 文件路径
    * @param {boolean} needMat 是否需要返回Mat
-   * @return {cv::Mat|string}
+   * @return {cv | string}
    */
   async screenshot(pathName = '', needMat = true) {
     // const msg = pathName !== '' ? ` pathName - ${pathName}` : '';
@@ -109,7 +111,7 @@ class BaseApp {
   }
 
   /**
-   * log美化
+   * @description log美化
    * @param {string} str 提示文案
    * @param {Symbol} level 从constants里取
    */
