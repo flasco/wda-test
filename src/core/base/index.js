@@ -38,6 +38,13 @@ class BaseApp {
     this.log(`tap [${x}, ${y}]`);
     return this.session.tap(x, y);
   }
+  /**
+   * 执行动作链
+   * @param {array<Object>} actions 动作链
+   */
+  chainOperation(actions) {
+    return this.session.chainOperation(actions);
+  }
 
   /**
    * @description 长按

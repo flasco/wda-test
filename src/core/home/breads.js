@@ -55,7 +55,7 @@ class Breads extends baseHome {
       this.runClickFlagCnt(1, 3, flagPool.getFlag(adBreadYes)).then(() => this.adBreads());
     } else {
       this.log('再等等...', LEVEL_INFO_MAP.warn);
-      setTimeout(() => this.couldClose(), 5000);
+      setTimeout(() => this.couldClose(), 1100);
     }
   }
 
@@ -87,7 +87,7 @@ class Breads extends baseHome {
         return;
       }
       // 这里不用await是为了防止长时间等待导致无响应
-      delay(27000).then(() => this.couldClose());
+      delay(31000).then(() => this.couldClose());
     } else {
       this.log('没有找到按钮...', LEVEL_INFO_MAP.warn);
     }

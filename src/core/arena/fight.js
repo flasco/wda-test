@@ -13,7 +13,7 @@ const {
 } = require('../../assets');
 const flagPool = require('../flag-pool');
 const { LEVEL_INFO_MAP } = require('../../constants');
-const { delay } = require('../../utils');
+const { delay, getRepeatActionsArray } = require('../../utils');
 const { Rect } = cv;
 
 class Fight extends BaseArena {
@@ -28,6 +28,7 @@ class Fight extends BaseArena {
     // if (simple < 0.9) await this.goToGate();
     // await this.goToArena();
     // const img = await this.screenshot();
+    // await this.goToArena();
     await this.prepareFight();
   }
 
@@ -54,6 +55,7 @@ class Fight extends BaseArena {
 
   async prepareFight() {
     this.log('开干开干');
+    await delay(600);
     await this.waitLoading();
     const img = await this.screenshot();
     const status = await this.judgeStatus(img);
@@ -63,7 +65,7 @@ class Fight extends BaseArena {
       await this.prepareFight();
     } else if (status === 'fight') {
       this.fightCheck();
-    } else if (status === 'emptyTickets'){
+    } else if (status === 'emptyTickets') {
       this.log('票已干...');
     } else {
       this.log('没有检测到按钮..');
@@ -88,7 +90,8 @@ class Fight extends BaseArena {
   async fightWait() {
     const img = await this.screenshot();
     const point = img.at(1081, 1972);
-    if (point.z > 10) {
+    console.log(point);
+    if (point.z > 0) {
       return true;
     } else {
       await delay(500);
@@ -100,32 +103,20 @@ class Fight extends BaseArena {
     await this.fightWait();
     let nextFight = 0;
     const [x, y] = [1972 / 3, 1081 / 3];
-    const flag = 
-
-    // 开女神
     this.tap(81 / 3, 949 / 3, true);
+    const actions = getRepeatActionsArray(x, y, 8);
     for (let i = 0; i < 10; i++) {
-      await this.tap(x, y, true, 10, 10);
-      await delay(300);
-      await this.tap(x, y, true, 10, 10);
-      await delay(300);
-      await this.tap(x, y, true, 10, 10);
-      await delay(300);
-      await this.tap(x, y, true, 10, 10);
-      await delay(300);
-      await this.tap(x, y, true, 10, 10);
-      await delay(300);
+      await this.chainOperation(actions);
       this.log('点完了...');
       const img = await this.screenshot();
-      const simple = await this.judgeSimple(img, flag);
-      if (simple > 0.9) {
+      const status = await this.judgeAfterFightStatus(img);
+      if (status) {
         nextFight = 1;
         break;
       }
     }
     this.log('干完了。。。');
     if (nextFight === 1) {
-      await this.judgeAfterFightStatus();
       this.prepareFight();
     }
   }
@@ -137,18 +128,20 @@ class Fight extends BaseArena {
     if (simple1 > 0.9) {
       this.log('下一局~');
       await this.runClickFlagCnt(1, 3, flag1);
-    } else {
-      const flag2 = flagPool.getFlag(yesBtn);
-      const simple2 = await this.judgeSimple(img, flag2);
-      if (simple2 > 0.9) {
-        this.log('哇哦，你升级了！');
-        await this.runClickFlagCnt(1, 3, flag2);
-        await this.judgeAfterFightStatus();
-      }
+      return true;
     }
+    const flag2 = flagPool.getFlag(yesBtn);
+    const simple2 = await this.judgeSimple(img, flag2);
+    if (simple2 > 0.9) {
+      this.log('哇哦，你升级了！');
+      await this.runClickFlagCnt(1, 3, flag2);
+      await this.judgeAfterFightStatus();
+      return true;
+    }
+    return false;
   }
 
-  async couldAuto(img1) {
+  couldAuto(img1) {
     const roi1 = img1.getRegion(this.rect1);
     const roi2 = img1.getRegion(this.rect2);
     const roi3 = img1.getRegion(this.rect3);
@@ -176,8 +169,7 @@ class Fight extends BaseArena {
         }
       }
     }
-    console.log(`isPink - ${pinkPoint}`);
-    return pinkPoint > 500;
+    return pinkPoint > 600 ? 1 : 0;
   }
 }
 
