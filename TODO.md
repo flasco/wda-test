@@ -1,7 +1,7 @@
 ## TODO list
 - [x] 好友互送荣誉
-- [x] 烘焙坊自动面包 [nextTarget]
-- [x] 优化flag获取，封装成一个flag-pool [nextTarget]
+- [x] 烘焙坊自动面包
+- [x] 优化flag获取，封装成一个flag-pool
 - [x] 斗技场简单的自动<大师级之后自己手动(因为强度不够)> [important]
 - [ ] 探险收菜 [nextTarget]
 - [ ] 灵魂要塞farm [important]

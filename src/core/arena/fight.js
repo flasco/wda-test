@@ -80,6 +80,7 @@ class Fight extends BaseArena {
       await this.runClickFlagCnt(1, 3, flagPool.getFlag(prepareFight));
       await delay(700);
       await this.runClickFlagCnt(1, 3, flagPool.getFlag(startFight));
+      await delay(800);
       await this.waitLoading();
       this.fight();
     } else {
@@ -101,10 +102,11 @@ class Fight extends BaseArena {
 
   async fight() {
     await this.fightWait();
+    await delay(700);
     let nextFight = 0;
     const [x, y] = [1972 / 3, 1081 / 3];
     this.tap(81 / 3, 949 / 3, true);
-    const actions = getRepeatActionsArray(x, y, 8);
+    const actions = getRepeatActionsArray(x, y, 6);
     for (let i = 0; i < 10; i++) {
       await this.chainOperation(actions);
       this.log('点完了...');

@@ -32,9 +32,10 @@ function getRepeatActionsArray(x, y, repCnt = 1) {
     });
     actions.push({
       action: 'wait',
-      options: { ms: getRandom(80, 8) }
+      options: { ms: getRandom(85, 8) }
     });
   }
+  return actions;
 }
 
 module.exports = {
