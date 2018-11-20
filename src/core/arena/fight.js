@@ -66,7 +66,7 @@ class Fight extends BaseArena {
     } else if (status === 'fight') {
       this.fightCheck();
     } else if (status === 'emptyTickets') {
-      this.log('票已干...');
+      this.log('票已干...', LEVEL_INFO_MAP.warn);
     } else {
       this.log('没有检测到按钮..');
     }
