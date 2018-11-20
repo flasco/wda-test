@@ -11,11 +11,11 @@ class Breads extends baseHome {
   }
 
   async start() {
-    (await this.openBreads()) && (await this.adBreads());
+    const img = await this.screenshot();
+    (await this.openBreads(img)) && (await this.adBreads(img));
   }
 
-  async openBreads() {
-    const img = await this.screenshot();
+  async openBreads(img) {
     const {
       simple,
       point: { x, y }
@@ -23,6 +23,9 @@ class Breads extends baseHome {
     if (simple > 0.8) {
       await this.tap(x, y, true);
       return true;
+    } else {
+      const simple2 = this.judgeSimple(img, flagPool.getFlag(adBreads));
+      if (simple2 > 0.9) return true;
     }
     this.log('没有找到面包按钮', LEVEL_INFO_MAP.warn);
   }
@@ -65,9 +68,9 @@ class Breads extends baseHome {
     return simple > 0.9;
   }
 
-  async adBreads() {
+  async adBreads(img = null) {
+    if (img == null) img = await this.screenshot();
     await this.waitLoading();
-    const img = await this.screenshot();
     const result = await this.judgeSimple(img, flagPool.getFlag(isADLimit));
     if (result > 0.95) {
       this.log('已经达到上限...', LEVEL_INFO_MAP.warn);

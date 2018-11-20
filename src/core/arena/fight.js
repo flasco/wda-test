@@ -154,7 +154,7 @@ class Fight extends BaseArena {
     const pink1 = this.isPink(roi_hsv1);
     const pink2 = this.isPink(roi_hsv2);
     const pink3 = this.isPink(roi_hsv3);
-    return pink1 + pink2 + pink3 < 2;
+    return pink1 + pink2 + pink3 < 3;
   }
 
   isPink(roi) {
