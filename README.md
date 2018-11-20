@@ -41,3 +41,6 @@ yarn wda # 前提是script/test.sh的信息已经配置完毕
 yarn install
 yarn start
 ```
+## 注意  
+如果wda出现频繁中断，原因是因为你的手机内存不够，后台进程被kill了。  
+解决方案：双击home键清空其他无关窗口再次运行即可（6以下的手机需要注意这个问题，毕竟内存小）
