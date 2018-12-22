@@ -1,4 +1,5 @@
 const homeImgs = require('./home');
+const fishImgs = require('./fishing');
 
 module.exports = {
   // common相关
@@ -10,4 +11,5 @@ module.exports = {
 
   // home相关
   ...homeImgs,
+  ...fishImgs,
 };

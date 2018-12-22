@@ -57,6 +57,26 @@ class BaseApp {
   }
 
   /**
+   * 拖拽
+   * @param {number} x1 前坐标x
+   * @param {number} y1 前坐标y
+   * @param {number} x2 后坐标x
+   * @param {number} y2 后坐标y
+   * @param {number} duration 耗时，秒为单位
+   */
+  async drag(x1, y1, x2, y2, duration = 0.7) {
+    x1 = Math.round(x1 * 100) / 100;
+    y1 = Math.round(y1 * 100) / 100;
+    x1 = Math.round(x2 * 100) / 100;
+    y1 = Math.round(y2 * 100) / 100;
+    try {
+      await this.session.swipe(x1, y1, x2, y2, duration);
+    } catch (error) {
+      this.log('啊哦，断掉了', LEVEL_INFO_MAP.warn);
+    }
+  }
+
+  /**
    * @description 长按
    * @param {number} x x坐标
    * @param {number} y y坐标

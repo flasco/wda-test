@@ -92,7 +92,9 @@ class GameCommon extends Base {
       }
       if (failedCnt > maxFailedCnt) break;
     }
+    if (failedCnt > maxFailedCnt) return false;
     this.log(`成功点击${cnt}次`, LEVEL_INFO_MAP.success);
+    return true;
   }
 
   async judgeSimple(img, containImg) {
