@@ -33,14 +33,16 @@ class Christmas extends BaseFish {
   async fishing(notPreCheck = false) {
     const preFlag = notPreCheck || (await this.preCheck());
     if (preFlag) {
-      if (this.cnt > 0 && this.cnt % 700 === 0) await this.buyBait();
+      const totalCnt = this.cnt + this.failedCnt;
+      if (totalCnt > 0 && totalCnt % 700 === 0) await this.buyBait();
       await this.inFishing();
       const afterFlag = await this.afterCheck();
       if (afterFlag) {
         const sec = Math.round((new Date() - this.startTime) / 1000);
         this.log(
-          `累计用时${sumTimeUse(sec)}, 共钓鱼 - ${++this
-            .cnt}条, 失败${this.failedCnt}次`
+          `用时${sumTimeUse(sec)}, 共钓鱼 - ${++this.cnt}条, 失败${
+            this.failedCnt
+          }次`
         );
         this.tempCnt !== 0 && (this.tempCnt = 0);
         return this.fishing(true);
@@ -126,10 +128,10 @@ class Christmas extends BaseFish {
 
   async checkStatus() {
     const img = await this.screenshot();
-    const simple1 = await this.judgeSimple(img, flagPool.getFlag(fishFlag));
-    if (simple1 > 0.9) return 'pre';
     const simple3 = await this.judgeSimple(img, flagPool.getFlag(fishUpdate));
     if (simple3 > 0.9) return 'update';
+    const simple1 = await this.judgeSimple(img, flagPool.getFlag(fishFlag));
+    if (simple1 > 0.9) return 'pre';
     const simple2 = await this.judgeSimple(img, flagPool.getFlag(fishContinue));
     if (simple2 > 0.9) return 'after';
     return 'unknown';
@@ -141,7 +143,7 @@ class Christmas extends BaseFish {
     await this.runClickFlagCnt(1, 3, flagPool.getFlag(baitBuyBtn));
     const result = await this.buyBaitSum();
     if (result === 'no-dialog' || result === 'find-fail') {
-      if (cnt > 0){
+      if (cnt > 0) {
         this.log('再次尝试..');
         return this.buyBait(cnt - 1);
       } else {
