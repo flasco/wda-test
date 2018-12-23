@@ -12,7 +12,7 @@ const {
   baitClose1,
   yesBtn
 } = require('../../assets');
-const { delay, getRandom } = require('../../utils');
+const { delay, getRandom, sumTimeUse } = require('../../utils');
 const { tap, wait, longPress } = require('../../utils/chainOperation');
 
 class Christmas extends BaseFish {
@@ -39,7 +39,7 @@ class Christmas extends BaseFish {
       if (afterFlag) {
         const sec = Math.round((new Date() - this.startTime) / 1000);
         this.log(
-          `累计用时${(sec / 60).toFixed(1)}分钟, 共钓鱼 - ${++this
+          `累计用时${sumTimeUse(sec)}, 共钓鱼 - ${++this
             .cnt}条, 失败${this.failedCnt}次`
         );
         this.tempCnt !== 0 && (this.tempCnt = 0);

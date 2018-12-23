@@ -37,10 +37,18 @@ function getRepeatActionsArray(x, y, repCnt = 1) {
   }
   return actions;
 }
+// time - 单位秒
+function sumTimeUse(time) {
+  const h = (time / 3600) >>> 0;
+  const m = (time % 3600) / 60;
+  if (h > 0) return `${h}小时${m.toFixed(1)}分钟`;
+  else return `${m.toFixed(1)}分钟`;
+}
 
 module.exports = {
   base642Mat,
   delay,
   getRandom,
+  sumTimeUse,
   getRepeatActionsArray
 };
