@@ -4,7 +4,7 @@ const flagPool = require('../flag-pool');
 
 const { isLoading1, close1 } = require('../../assets');
 const { delay } = require('../../utils');
-const { LEVEL_INFO_MAP } = require('../../constants');
+// const { LEVEL_INFO_MAP } = require('../../constants');
 
 // 这里存放一些组件的公用业务function
 class GameCommon extends Base {
@@ -40,7 +40,7 @@ class GameCommon extends Base {
         }
       }
     }
-    this.log(`green - ${greenPoints}`);
+    // this.log(`green - ${greenPoints}`);
     return greenPoints > 800;
   }
 
@@ -93,7 +93,7 @@ class GameCommon extends Base {
       if (failedCnt > maxFailedCnt) break;
     }
     if (failedCnt > maxFailedCnt) return false;
-    this.log(`成功点击${cnt}次`, LEVEL_INFO_MAP.success);
+    // this.log(`成功点击${cnt}次`, LEVEL_INFO_MAP.success);
     return true;
   }
 

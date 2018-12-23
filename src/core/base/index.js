@@ -37,7 +37,7 @@ class BaseApp {
     x = Math.round(x * 100) / 100;
     y = Math.round(y * 100) / 100;
 
-    this.log(`tap [${x}, ${y}]`);
+    // this.log(`tap [${x}, ${y}]`);
     try {
       await this.session.tap(x, y);
     } catch (error) {
@@ -80,7 +80,7 @@ class BaseApp {
   async tapHold(x, y, delay = 1.0) {
     x = Math.round(x * 100) / 100;
     y = Math.round(y * 100) / 100;
-    this.log(`tapHold [${x}, ${y}]`);
+    // this.log(`tapHold [${x}, ${y}]`);
     try {
       await this.session.tapHold(x, y, delay);
     } catch (error) {
