@@ -65,10 +65,6 @@ class BaseApp {
    * @param {number} duration 耗时，秒为单位
    */
   async drag(x1, y1, x2, y2, duration = 0.7) {
-    x1 = Math.round(x1 * 100) / 100;
-    y1 = Math.round(y1 * 100) / 100;
-    x1 = Math.round(x2 * 100) / 100;
-    y1 = Math.round(y2 * 100) / 100;
     try {
       await this.session.swipe(x1, y1, x2, y2, duration);
     } catch (error) {

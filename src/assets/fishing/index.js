@@ -8,4 +8,5 @@ module.exports = {
   baitBuyBtn: `${__dirname}/bait-buy.png`,
   baitSumSlider: `${__dirname}/bait-sum.png`,
   baitPayment: `${__dirname}/bait-payment.png`,
+  baitClose1: `${__dirname}/bait-close1.png`,
 };

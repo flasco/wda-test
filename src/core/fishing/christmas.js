@@ -9,7 +9,8 @@ const {
   baitBuyBtn,
   baitPayment,
   baitSumSlider,
-  yesBtn,
+  baitClose1,
+  yesBtn
 } = require('../../assets');
 const { delay, getRandom } = require('../../utils');
 const { tap, wait, longPress } = require('../../utils/chainOperation');
@@ -26,6 +27,7 @@ class Christmas extends BaseFish {
     this.tempCnt = 0;
     this.startTime = new Date();
     await this.fishing();
+    // await this.buyBaitSum();
   }
 
   async fishing(notPreCheck = false) {
@@ -41,7 +43,7 @@ class Christmas extends BaseFish {
             .cnt}条, 失败${this.failedCnt}次`
         );
         this.tempCnt !== 0 && (this.tempCnt = 0);
-        return this.fishing();
+        return this.fishing(true);
       }
     }
 
@@ -133,26 +135,47 @@ class Christmas extends BaseFish {
     return 'unknown';
   }
 
-  async buyBait() {
+  async buyBait(cnt = 3) {
     this.log('该买鱼饵了...');
     await this.runClickFlagCnt(1, 3, flagPool.getFlag(baitEntrance));
     await this.runClickFlagCnt(1, 3, flagPool.getFlag(baitBuyBtn));
-    // 拉动 165
+    const result = await this.buyBaitSum();
+    if (result === 'no-dialog' || result === 'find-fail') {
+      if (cnt > 0){
+        this.log('再次尝试..');
+        return this.buyBait(cnt - 1);
+      } else {
+        this.log('尝试达到上限，gg');
+        await this.runClickFlagCnt(1, 3, flagPool.getFlag(baitClose1));
+        await this.runClickFlagCnt(1, 3, flagPool.getFlag(this.closeFlag));
+      }
+    }
+  }
+
+  async buyBaitSum() {
     const img = await this.screenshot();
     const {
       simple,
       point: { x, y }
     } = await this.judgeMatching(img, flagPool.getFlag(baitSumSlider));
-
-    if (simple > 0.9) {
-      await this.drag(x, y, x + 170, y, 0.7);
-      await this.runClickFlagCnt(1, 3, flagPool.getFlag(baitPayment));
-      await delay(200);
-      await this.waitLoading();
-      await this.runClickFlagCnt(1, 3, flagPool.getFlag(yesBtn));
-      await this.runClickFlagCnt(1, 3, flagPool.getFlag(this.closeFlag));
-    } else this.log('购买鱼饵出错了...');
-
+    const simple2 = await this.judgeSimple(img, flagPool.getFlag(baitPayment));
+    if (simple2 > 0.9) {
+      // 在窗口里
+      if (simple > 0.9) {
+        await this.drag(x, y, x + 170, y, 0.7);
+        await this.runClickFlagCnt(1, 3, flagPool.getFlag(baitPayment));
+        await delay(200);
+        await this.waitLoading();
+        await this.runClickFlagCnt(1, 3, flagPool.getFlag(yesBtn));
+        await this.runClickFlagCnt(1, 3, flagPool.getFlag(this.closeFlag));
+      } else {
+        this.log(`寻找拖动点失败, simple - ${simple}`);
+        return 'find-fail';
+      }
+    } else {
+      this.log(`不在窗口内，simple - ${simple2}`);
+      return 'no-dialog';
+    }
   }
 }
 
