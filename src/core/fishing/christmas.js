@@ -30,46 +30,32 @@ class Christmas extends BaseFish {
     // await this.buyBaitSum();
   }
 
-  async fishing(notPreCheck = false) {
-    const preFlag = notPreCheck || (await this.preCheck());
-    if (preFlag) {
+  async fishing() {
+    if (this.tempCnt > 5) return;
+    const img = await this.screenshot();
+    let status = await this.checkStatus(img);
+    if (this.wheelPos == null) await this.preCheck(img);
+
+    if (status == 'pre') {
       const totalCnt = this.cnt + this.failedCnt;
       if (totalCnt > 0 && totalCnt % 700 === 0) await this.buyBait();
       await this.inFishing();
-      const afterFlag = await this.afterCheck();
-      if (afterFlag) {
-        const sec = Math.round((new Date() - this.startTime) / 1000);
-        this.log(
-          `用时${sumTimeUse(sec)}, 共钓鱼 - ${++this.cnt}条, 失败${
-            this.failedCnt
-          }次`
-        );
-        this.tempCnt !== 0 && (this.tempCnt = 0);
-        return this.fishing(true);
-      }
-    }
-
-    this.failedCnt++;
-    if (this.tempCnt > 5) return;
-    const status = await this.checkStatus();
-    if (status === 'pre') return this.fishing(true);
-    else if (status === 'after') {
-      await this.afterCheck();
-      return this.fishing();
-    } else if (status === 'update') {
+      await this.afterCheck(true);
+    } else if (status === 'after') await this.afterCheck();
+    else if (status === 'update') {
       this.log('哇哦，你升级了！');
       await this.runClickFlagCnt(1, 3, flagPool.getFlag(fishUpdate));
-      await this.afterCheck();
-      return this.fishing();
+      await this.afterCheck(true);
     } else {
+      this.failedCnt++;
       this.log(`未知错误，尝试第${++this.tempCnt}次`);
-      await delay(2000);
-      return this.fishing();
+      await delay(3000);
     }
+    return this.fishing();
   }
 
-  async preCheck() {
-    const img = await this.screenshot();
+  async preCheck(img) {
+    if (img == null) img = await this.screenshot();
 
     const { point, simple } = await this.judgeMatching(
       img,
@@ -86,13 +72,22 @@ class Christmas extends BaseFish {
     return false;
   }
 
-  async afterCheck() {
+  async afterCheck(showLog = false) {
     await delay(400);
     const result = await this.runClickFlagCnt(
       1,
       3,
       flagPool.getFlag(fishContinue)
     );
+    if (result && showLog) {
+      const sec = Math.round((new Date() - this.startTime) / 1000);
+      this.log(
+        `用时${sumTimeUse(sec)}, 共钓鱼 - ${++this.cnt}条, 失败${
+          this.failedCnt
+        }次`
+      );
+      this.tempCnt !== 0 && (this.tempCnt = 0);
+    }
     return result;
   }
 
@@ -126,8 +121,8 @@ class Christmas extends BaseFish {
     ]);
   }
 
-  async checkStatus() {
-    const img = await this.screenshot();
+  async checkStatus(img) {
+    if (img == null) img = await this.screenshot();
     const simple3 = await this.judgeSimple(img, flagPool.getFlag(fishUpdate));
     if (simple3 > 0.9) return 'update';
     const simple1 = await this.judgeSimple(img, flagPool.getFlag(fishFlag));
